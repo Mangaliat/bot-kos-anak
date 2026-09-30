@@ -6,6 +6,16 @@ const qrcode = require('qrcode-terminal');
 const moment = require('moment');
 const { handleMessage } = require('./handler');
 
+// Keep-alive web server (wajib untuk UptimeRobot di Replit)
+const http = require('http');
+const PORT = process.env.PORT || 3000;
+http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Bot Kos Anak aktif! ' + moment().format('DD/MM/YYYY HH:mm:ss'));
+}).listen(PORT, () => {
+    console.log(`🌐 Keep-alive server jalan di port ${PORT}`);
+});
+
 // Set locale Indonesia untuk moment
 moment.locale('id');
 
