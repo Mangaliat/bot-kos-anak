@@ -1,0 +1,26 @@
+[run]
+command = "npm start"
+
+[deployment]
+run = ["sh", "-c", "npm start"]
+
+[nix]
+channel = "stable-22_11"
+
+[env]
+PUPPETEER_SKIP_CHROMIUM_DOWNLOAD = "true"
+PUPPETEER_EXECUTABLE_PATH = "/nix/store/chromium/bin/chromium"
+
+[packager]
+language = "nodejs"
+
+[packager.features]
+enabledForHosting = false
+packageSearch = true
+guessImports = true
+
+[languages.javascript]
+pattern = "**/*.{js,jsx,ts,tsx,json}"
+
+[languages.javascript.languageServer]
+start = "typescript-language-server --stdio"
