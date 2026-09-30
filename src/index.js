@@ -136,3 +136,24 @@ process.on('SIGINT', async () => {
 
 // Inisialisasi client
 client.initialize();
+
+// Auto-restart mechanism: jika bot mati/error, hidupkan ulang
+process.on('uncaughtException', async (err) => {
+    console.error('❌ Uncaught Exception:', err);
+    console.log('🔄 Memulai ulang bot dalam 5 detik...');
+    setTimeout(() => {
+        process.exit(1); // Force restart (Replit auto-runs npm start)
+    }, 5000);
+});
+
+process.on('unhandledRejection', async (err) => {
+    console.error('❌ Unhandled Rejection:', err);
+});
+
+client.on('disconnected', (reason) => {
+    console.log('⚠️ Bot terputus:', reason);
+    console.log('🔄 Memulai ulang bot dalam 5 detik...');
+    setTimeout(() => {
+        process.exit(1); // Force restart
+    }, 5000);
+});
